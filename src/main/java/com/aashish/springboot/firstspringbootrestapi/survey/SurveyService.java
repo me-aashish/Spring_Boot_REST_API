@@ -43,4 +43,14 @@ public class SurveyService {
 		return optionalSurvey.get();
 	}
 
+	public List<Question> retrieveSurveyQuestions(String surveyId) {
+		Predicate<? super Survey> predicate = survey -> survey.getId().equals(surveyId);
+		Optional<Survey> optionalSurvey = surveys.stream().filter(predicate).findFirst();
+
+		if (optionalSurvey.isEmpty())
+			return null;
+
+		return optionalSurvey.get().getQuestions();
+	}
+
 }
