@@ -53,4 +53,19 @@ public class SurveyService {
 		return optionalSurvey.get().getQuestions();
 	}
 
+	public Question retrieveSurveyQuestion(String surveyId, String questionId) {
+		List<Question> surveyQuestions = retrieveSurveyQuestions(surveyId);
+
+		if (surveyQuestions == null)
+			return null;
+
+		Optional<Question> optionalQuestion = surveyQuestions.stream()
+				.filter(q -> q.getId().equalsIgnoreCase(questionId)).findFirst();
+
+		if (optionalQuestion.isEmpty())
+			return null;
+
+		return optionalQuestion.get();
+	}
+
 }
