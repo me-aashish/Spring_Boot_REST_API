@@ -36,6 +36,10 @@ public class Question {
 		return correctAnswers;
 	}
 
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	@Override
 	public String toString() {
 		return "Question [id=" + id + ", description=" + description + ", options=" + options + ", correctAnswers="
