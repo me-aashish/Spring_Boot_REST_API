@@ -81,4 +81,22 @@ public class SurveyService {
 
 	}
 
+	public Question deleteSurveyQuestion(String surveyId, String questionId) {
+		List<Question> surveyQuestions = retrieveSurveyQuestions(surveyId);
+
+		if (surveyQuestions == null)
+			return null;
+
+		Predicate<? super Question> predicate = q -> q.getId().equalsIgnoreCase(questionId);
+		Optional<Question> optionalQuestion = surveyQuestions.stream()
+				.filter(q -> q.getId().equalsIgnoreCase(questionId)).findFirst();
+		boolean removed = surveyQuestions.removeIf(predicate);
+
+		if (!removed)
+			return null;
+
+		return optionalQuestion.get();
+
+	}
+
 }

@@ -3,6 +3,7 @@ package com.aashish.springboot.firstspringbootrestapi.survey;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,8 +54,19 @@ public class SurveyResource {
 	}
 
 	@RequestMapping(value = "/surveys/{surveyId}/questions", method = RequestMethod.POST)
-	public void addSurveyQuestion(@PathVariable String surveyId, @RequestBody Question question) {
+	public ResponseEntity<Object> addSurveyQuestion(@PathVariable String surveyId, @RequestBody Question question) {
 		surveyService.addSurveyQuestion(surveyId, question);
 
+		return ResponseEntity.created(null).build();
+
+	}
+
+	@RequestMapping(value = "/surveys/{surveyId}/questions/{questionId}", method = RequestMethod.DELETE)
+	public Question deleteSurveyQuestion(@PathVariable String surveyId, @PathVariable String questionId) {
+		Question question = surveyService.deleteSurveyQuestion(surveyId, questionId);
+
+		if (question == null)
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		return question;
 	}
 }
