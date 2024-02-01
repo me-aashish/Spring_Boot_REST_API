@@ -99,4 +99,19 @@ public class SurveyService {
 
 	}
 
+	public Question updateSurveyQuestion(String surveyId, String questionId, Question question) {
+		List<Question> surveyQuestions = retrieveSurveyQuestions(surveyId);
+
+		if (surveyQuestions == null)
+			return null;
+
+		Predicate<? super Question> predicate = q -> q.getId().equalsIgnoreCase(questionId);
+		Optional<Question> optionalQuestion = surveyQuestions.stream()
+				.filter(q -> q.getId().equalsIgnoreCase(questionId)).findFirst();
+		surveyQuestions.removeIf(predicate);
+		surveyQuestions.add(question);
+
+		return question;
+	}
+
 }

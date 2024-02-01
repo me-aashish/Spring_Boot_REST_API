@@ -69,4 +69,15 @@ public class SurveyResource {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		return question;
 	}
+
+	@RequestMapping(value = "/surveys/{surveyId}/questions/{questionId}", method = RequestMethod.PUT)
+	public Question updateSurveyQuestion(@PathVariable String surveyId, @PathVariable String questionId,
+			@RequestBody Question question) {
+		surveyService.updateSurveyQuestion(surveyId, questionId, question);
+
+		if (question == null)
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		return question;
+	}
+
 }
